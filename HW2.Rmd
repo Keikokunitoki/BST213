@@ -1,0 +1,110 @@
+---
+title: "HW2"
+author: "Keiko"
+date: "9/13/2019"
+output: html_document
+---
+
+# Homework2
+
+## read library(excel)
+```{r}
+library(readxl)
+lbw <- read_excel("C:/Users/keiko/Dropbox/2019/fall/BST213/lbw.xlsx")
+View(lbw)
+```
+
+
+
+## basic statistics
+### overview of the dataset
+```{r}
+str(lbw)
+head(lbw)
+```
+row number
+```{r}
+length(lbw$bwt)
+```
+class
+```{r}
+class(lbw$race)
+lbw$race <- as.factor(lbw$race)
+```
+number of category
+```{r}
+levels(lbw$race)
+```
+
+
+#### plot
+```{r}
+plot(lbw$lwt,lbw$bwt)
+library(ggpubr)
+ggqqplot(lbw$age)
+```
+
+### correlation analysis
+
+```{r}
+lwt.lm=lm(bwt~lwt,data=lbw)
+summary(lwt.lm)
+```
+
+
+residual plot
+```{r}
+lwt.lm=lm(bwt~lwt,data=lbw) 
+lwt.res = resid(lwt.lm) 
+
+plot(lbw$lwt, lwt.res, 
+     ylab="Residuals", xlab="lwt", 
+     main="birth weight") 
+abline(0, 0)                  # the horizon 
+```
+
+```{r}
+lwt.lm=lm(bwt~lwt,data=lbw) 
+lwt.stdres = rstandard(lwt.lm) 
+
+plot(lbw$lwt, lwt.stdres, 
+     ylab="Standardized Residuals", xlab="lwt", 
+     main="birth weight") 
+abline(0, 0)  
+```
+
+hist + normal curve
+```{r}
+r = lwt.res
+m<-mean(r)
+std<-sqrt(var(r))
+hist(r, density=20, breaks=20, prob=TRUE, 
+     xlab="residuals",  
+     main="normal curve over histogram")
+curve(dnorm(x, mean=m, sd=std), 
+      col="darkblue", lwd=2, add=TRUE, yaxt="n")
+```
+
+#### Fit plot
+```{r}
+library(ggplot2)
+
+ggplot(lbw, aes(x = lwt, y = bwt)) + 
+  geom_point() +
+  stat_smooth(method = "lm", col = "red")
+```
+#### cf. prediction for a certain variable
+confidence intercal for linear regression
+(linear model itself)
+```{r}
+newdata = data.frame(lwt=80) 
+predict(lwt.lm, newdata, interval="confidence")
+```
+
+prediction intercal for linear regression
+(point estimation)
+```{r}
+newdata = data.frame(lwt=80) 
+predict(lwt.lm, newdata, interval="prediction")
+```
+

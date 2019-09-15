@@ -1,0 +1,72 @@
+---
+title: "simple_regression"
+author: "Keiko"
+date: "9/14/2019"
+output: html_document
+---
+input the data
+```{r}
+library(readxl)
+input <- read_excel("C:/Users/keiko/Dropbox/2019/fall/BST213/lbw.xlsx")
+View(input)
+str(input)
+head(input)
+```
+
+define imput and outcome
+__replace outcome and var1 as you like__
+```{r}
+outcome<-input$bwt
+print("outcome_is_bwt")
+var1<-input$lwt
+print("var1_is_lwt")
+length(outcome)
+plot(var1,outcome)
+library(ggpubr)
+ggqqplot(var1)
+input.lm=lm(outcome~var1)
+summary(input.lm)
+
+input.res = resid(input.lm) 
+
+plot(var1, input.res, 
+     ylab="Residuals", xlab="var1", 
+     main="birth weight") 
+abline(0, 0)  
+
+input.stdres = rstandard(input.lm) 
+
+plot(var1, input.stdres, 
+     ylab="Standardized Residuals", xlab="var1", 
+     main="outcome") 
+abline(0, 0)  
+
+r = input.res
+m<-mean(r)
+std<-sqrt(var(r))
+hist(r, density=20, breaks=20, prob=TRUE, 
+     xlab="residuals",  
+     main="normal curve over histogram")
+curve(dnorm(x, mean=m, sd=std), 
+      col="darkblue", lwd=2, add=TRUE, yaxt="n")
+
+ggplot(input,aes(x = var1, y = outcome)) + 
+  geom_point() +
+  stat_smooth(method = "lm", col = "red")
+```
+confidence intercal for linear regression
+(linear model itself)
+
+__replace 80 to your interest__ 
+```{r}
+newdata = data.frame(var1=80) 
+predict(input.lm, newdata, interval="confidence")
+```
+
+prediction intercal for linear regression
+(point estimation)
+
+__replace 80 to your interest__ 
+```{r}
+newdata = data.frame(var1=80) 
+predict(input.lm, newdata, interval="prediction")
