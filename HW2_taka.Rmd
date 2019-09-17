@@ -72,6 +72,7 @@ lbw$factor_ui %>% table
 lbw$factor_ptl %>% table
 lbw$factor_ftv %>% table
 Rmdだとパイプがバグるのはなぜだ？？
+->なぜかちゃんと走りました。
 
 #Yes or Noなど明らかにfactorでわかる変数として作成
 
@@ -190,7 +191,7 @@ plot(g3)
 #Boxplotもggplotで
 
 
-```{r}
+```{r, echo=FALSE}
 g1 <- ggplot(lbw, aes(y = bwt, x = smoke_y_n))
 g2 <- g1 + geom_boxplot()
 g3 <- g2 + labs(title = "Birth Weight in Smoking Category", x = "Smoking Status", y = "Birth Weight")
@@ -199,6 +200,7 @@ plot(g3)
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 これあんま意味わからんけど残しとこ
+->{r, echo=FALSE} とするとコードを隠して結果だけ羅列できます。上のプロットコードが隠れているはず・・・
 
 
 #Section.3 Linear regression ####
