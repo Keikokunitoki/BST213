@@ -1,4 +1,3 @@
-
 library(SASxport)
 vid <- read.xport("C:/Users/keiko/Desktop/213final/Datasets/VID_H.xpt")
 head (vid)
@@ -39,4 +38,4 @@ write.csv(data, "C:/Users/keiko/Desktop/213final/Datasets/nhanes_total.csv", sep
 
 
 sdata <- data %>%
-  select(SLD010H, URXDEE, PUQ100, PUQ110, FSDAD, DUQ200)
+  select(SLD010H, URXDEE, PUQ100, PUQ110, FSDAD, DUQ200,)
