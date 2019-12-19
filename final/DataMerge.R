@@ -1,3 +1,4 @@
+
 library(SASxport)
 vid <- read.xport("C:/Users/keiko/Desktop/213final/Datasets/VID_H.xpt")
 head (vid)
@@ -15,6 +16,8 @@ rxq <- read.xport("C:/Users/keiko/Desktop/213final/Datasets/RXQ_RX_H.xpt")
 dsqtot <- read.xport("C:/Users/keiko/Desktop/213final/Datasets/DSQTOT_H.xpt")
 paq <- read.xport("C:/Users/keiko/Desktop/213final/Datasets/PAQ_H.xpt")
 mgx <- read.xport("C:/Users/keiko/Desktop/213final/Datasets/MGX_H.xpt")
+dxafem <- read.xport("C:/Users/keiko/Desktop/213final/Datasets/DXXFEM_H.xpt")
+dxafra <- read.xport("C:/Users/keiko/Desktop/213final/Datasets/DXXFRX_H.xpt")
 
 data <- demo
 library(tidyr)
@@ -32,10 +35,19 @@ data <- data %>% left_join(alq,by="SEQN")
 data <- data %>% left_join(dsqtot,by="SEQN")
 data <- data %>% left_join(paq,by="SEQN")
 data <- data %>% left_join(mgx,by="SEQN")
+data <- data %>% left_join(dxafem,by="SEQN")
+data <- data %>% left_join(dxafra,by="SEQN")
 
 
+#total data
 write.csv(data, "C:/Users/keiko/Desktop/213final/Datasets/nhanes_total.csv", sep=";" ) 
 
+data <- read.csv("C:/Users/keiko/Desktop/213final/Datasets/nhanes_total.csv") 
 
+#select variables we are going to use
 sdata <- data %>%
-  select(SLD010H, URXDEE, PUQ100, PUQ110, FSDAD, DUQ200,)
+  select(SLD010H, URXDEE, PUQ100,DXXPRVFX, DXXNKBMD, PUQ110, FSDAD, DUQ200, DBD900, RIDAGEYR, DMDHRGND, BMXBMI, SMQ040, ALQ130, RIDRETH1, DSQTVD, LBXVIDMS, MGDCGSZ)
+
+#selected data
+write.csv(sdata, "C:/Users/keiko/Desktop/213final/Datasets/nhanes_select.csv", sep=";" ) 
+
