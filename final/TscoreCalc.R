@@ -1,0 +1,1 @@
+data <- read.csv("C:/Users/keiko/Desktop/213final/Datasets/nhanes_total.csv") 
